@@ -32,16 +32,38 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         console.log('Found session, fetching profile...');
         
         // Fetch user profile with role
-        const { data: profile, error } = await supabase
+        const { data: profiles, error } = await supabase
           .from('profiles')
           .select('*')
-          .eq('id', session.user.id)
-          .single();
+          .eq('id', session.user.id);
 
         if (error) {
           console.error('Error fetching profile:', error);
           set({ user: null, loading: false });
           return;
+        }
+
+        let profile = profiles?.[0];
+
+        // If no profile exists, create one with default role
+        if (!profile) {
+          console.log('No profile found, creating default profile...');
+          const { data: newProfile, error: createError } = await supabase
+            .from('profiles')
+            .insert({
+              id: session.user.id,
+              role: 'viewer'
+            })
+            .select()
+            .single();
+
+          if (createError) {
+            console.error('Error creating profile:', createError);
+            set({ user: null, loading: false });
+            return;
+          }
+
+          profile = newProfile;
         }
 
         if (profile) {
@@ -67,11 +89,32 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         console.log('Auth state changed:', event, session?.user?.email);
         
         if (event === 'SIGNED_IN' && session?.user) {
-          const { data: profile } = await supabase
+          const { data: profiles } = await supabase
             .from('profiles')
             .select('*')
-            .eq('id', session.user.id)
-            .single();
+            .eq('id', session.user.id);
+
+          let profile = profiles?.[0];
+
+          // If no profile exists, create one with default role
+          if (!profile) {
+            console.log('No profile found in auth change, creating default profile...');
+            const { data: newProfile, error: createError } = await supabase
+              .from('profiles')
+              .insert({
+                id: session.user.id,
+                role: 'viewer'
+              })
+              .select()
+              .single();
+
+            if (createError) {
+              console.error('Error creating profile in auth change:', createError);
+              return;
+            }
+
+            profile = newProfile;
+          }
 
           if (profile) {
             set({
@@ -115,15 +158,36 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         console.log('Sign in successful, fetching profile...');
         
         // Fetch user profile with role
-        const { data: profile, error: profileError } = await supabase
+        const { data: profiles, error: profileError } = await supabase
           .from('profiles')
           .select('*')
-          .eq('id', data.user.id)
-          .single();
+          .eq('id', data.user.id);
 
         if (profileError) {
           console.error('Profile fetch error:', profileError);
           throw profileError;
+        }
+
+        let profile = profiles?.[0];
+
+        // If no profile exists, create one with default role
+        if (!profile) {
+          console.log('No profile found during sign in, creating default profile...');
+          const { data: newProfile, error: createError } = await supabase
+            .from('profiles')
+            .insert({
+              id: data.user.id,
+              role: 'viewer'
+            })
+            .select()
+            .single();
+
+          if (createError) {
+            console.error('Error creating profile during sign in:', createError);
+            throw createError;
+          }
+
+          profile = newProfile;
         }
 
         if (profile) {
