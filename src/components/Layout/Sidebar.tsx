@@ -86,19 +86,6 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
             </NavLink>
           ))}
         </nav>
-
-        <div className="mt-auto bg-gradient-to-br from-blue-600/20 to-cyan-600/20 p-4 rounded-xl">
-          <p className="text-sm leading-snug">
-            Upgrade to <span className="font-semibold text-cyan-400">Professional</span> for 
-            unlimited data storage and advanced analytics!
-          </p>
-          <div className="flex items-center justify-between mt-4 text-sm">
-            <button className="hover:underline text-white/70">Maybe Later</button>
-            <button className="bg-white/10 hover:bg-white/20 transition px-3 py-1.5 rounded-md font-medium">
-              Go Pro
-            </button>
-          </div>
-        </div>
       </aside>
 
       {/* New Entry Modal */}
