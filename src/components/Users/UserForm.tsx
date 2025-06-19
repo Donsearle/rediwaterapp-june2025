@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { X, TriangleAlert } from 'lucide-react';
+import { X, AlertTriangle as TriangleAlert } from 'lucide-react';
 import { useUsers } from '../../hooks/useUsers';
 import { LoadingSpinner } from '../Common/LoadingSpinner';
 import type { User } from '../../types';

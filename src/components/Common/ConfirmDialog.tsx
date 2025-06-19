@@ -1,5 +1,5 @@
 import React from 'react';
-import { TriangleAlert } from 'lucide-react';
+import { AlertTriangle as TriangleAlert } from 'lucide-react';
 import { LoadingSpinner } from './LoadingSpinner';
 
 interface ConfirmDialogProps {

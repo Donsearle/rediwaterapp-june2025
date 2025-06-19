@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Pencil, Trash, TriangleAlert } from 'lucide-react';
+import { Plus, Pencil, Trash, AlertTriangle as TriangleAlert } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useUsers } from '../../hooks/useUsers';
 import { LoadingSpinner } from '../Common/LoadingSpinner';

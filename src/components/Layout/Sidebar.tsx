@@ -1,16 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
-import {
-  LayoutDashboard,
-  Map,
-  Settings,
-  Upload,
-  Users,
-  BarChart,
-  Plus,
-  Waveform,
-} from 'lucide-react';
+import { LayoutDashboard, Map, Settings, Upload, Users, BarChart, Plus, AudioWaveform as Waveform } from 'lucide-react';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, roles: ['admin', 'editor', 'viewer'] },
