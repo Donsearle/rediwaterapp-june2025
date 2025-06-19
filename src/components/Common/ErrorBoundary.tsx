@@ -26,22 +26,22 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-          <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6">
+        <div className="h-full flex items-center justify-center">
+          <div className="max-w-md w-full bg-slate-800/90 backdrop-blur-lg border border-white/10 rounded-xl shadow-xl p-6">
             <div className="text-center">
-              <h1 className="text-2xl font-bold text-gray-900 mb-4">Something went wrong</h1>
-              <p className="text-gray-600 mb-6">
+              <h1 className="text-2xl font-bold text-white mb-4">Something went wrong</h1>
+              <p className="text-white/70 mb-6">
                 We apologize for the inconvenience. Please try refreshing the page.
               </p>
               <div className="space-y-2 mb-6">
-                <p className="text-sm text-gray-500">Error details:</p>
-                <pre className="text-xs text-red-600 bg-red-50 p-2 rounded overflow-auto">
+                <p className="text-sm text-white/60">Error details:</p>
+                <pre className="text-xs text-red-400 bg-red-500/10 border border-red-500/20 p-2 rounded overflow-auto">
                   {this.state.error?.message || 'Unknown error'}
                 </pre>
               </div>
               <button
                 onClick={() => window.location.reload()}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md"
+                className="btn-primary"
               >
                 Refresh Page
               </button>

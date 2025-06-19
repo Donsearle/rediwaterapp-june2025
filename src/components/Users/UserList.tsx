@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { PlusIcon, PencilIcon, TrashIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { Plus, Pencil, Trash, TriangleAlert } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useUsers } from '../../hooks/useUsers';
 import { LoadingSpinner } from '../Common/LoadingSpinner';
 import { UserForm } from './UserForm';
 import { ConfirmDialog } from '../Common/ConfirmDialog';
-import { dateUtils, stringUtils } from '../../lib/utils';
+import { dateUtils } from '../../lib/utils';
 import type { User } from '../../types';
 
 export function UserList() {
@@ -50,8 +50,8 @@ export function UserList() {
     <div className="space-y-6">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-2xl font-bold leading-7 text-gray-900">Users</h1>
-          <p className="mt-2 text-sm text-gray-700">
+          <h1 className="text-2xl font-bold leading-7 text-white">Users</h1>
+          <p className="mt-2 text-sm text-white/60">
             Manage user accounts and permissions for the water management platform.
           </p>
         </div>
@@ -60,9 +60,9 @@ export function UserList() {
             <button
               type="button"
               onClick={() => setShowForm(true)}
-              className="btn-primary"
+              className="btn-primary flex items-center gap-2"
             >
-              <PlusIcon className="h-4 w-4 mr-2" />
+              <Plus className="h-4 w-4" />
               Add User
             </button>
           </div>
@@ -70,16 +70,16 @@ export function UserList() {
       </div>
 
       {/* Backend Implementation Notice */}
-      <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4">
+      <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-4">
         <div className="flex">
           <div className="flex-shrink-0">
-            <ExclamationTriangleIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+            <TriangleAlert className="h-5 w-5 text-yellow-400" aria-hidden="true" />
           </div>
           <div className="ml-3">
-            <h3 className="text-sm font-medium text-yellow-800">
+            <h3 className="text-sm font-medium text-yellow-300">
               Backend Implementation Required
             </h3>
-            <div className="mt-2 text-sm text-yellow-700">
+            <div className="mt-2 text-sm text-yellow-200/80">
               <p>
                 User management operations (creating and deleting users) require a secure backend implementation 
                 using Supabase Edge Functions with admin privileges. Currently, only role updates may work 
@@ -90,18 +90,18 @@ export function UserList() {
         </div>
       </div>
 
-      <div className="bg-white shadow-sm ring-1 ring-gray-900/5 rounded-lg">
-        <div className="overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-300">
-            <thead className="bg-gray-50">
+      <div className="bg-slate-900/40 backdrop-blur-lg border border-white/10 rounded-xl overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-sm">
+            <thead className="text-left text-white/60 border-b border-white/10">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">
+                <th scope="col" className="px-6 py-3 text-xs font-medium uppercase tracking-wide">
                   Email
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">
+                <th scope="col" className="px-6 py-3 text-xs font-medium uppercase tracking-wide">
                   Role
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">
+                <th scope="col" className="px-6 py-3 text-xs font-medium uppercase tracking-wide">
                   Created
                 </th>
                 {canManageUsers && (
@@ -111,24 +111,24 @@ export function UserList() {
                 )}
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="divide-y divide-white/10">
               {users.map((user) => (
-                <tr key={user.id} className="hover:bg-gray-50">
+                <tr key={user.id} className="hover:bg-white/5 transition">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{user.email}</div>
+                    <div className="text-sm font-medium text-white">{user.email}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${
                       user.role === 'admin' 
-                        ? 'bg-purple-100 text-purple-800'
+                        ? 'bg-purple-500/20 text-purple-300'
                         : user.role === 'editor'
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-gray-100 text-gray-800'
+                        ? 'bg-blue-500/20 text-blue-300'
+                        : 'bg-gray-500/20 text-gray-300'
                     }`}>
                       {user.role}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">
                     {dateUtils.formatForDisplay(user.created_at)}
                   </td>
                   {canManageUsers && (
@@ -136,18 +136,18 @@ export function UserList() {
                       <div className="flex items-center gap-2 justify-end">
                         <button
                           onClick={() => handleEdit(user)}
-                          className="text-blue-600 hover:text-blue-500"
+                          className="text-blue-400 hover:text-blue-300 transition"
                           title="Edit user role"
                         >
-                          <PencilIcon className="h-4 w-4" />
+                          <Pencil className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => handleDelete(user)}
-                          className="text-red-600 hover:text-red-500 opacity-50 cursor-not-allowed"
+                          className="text-red-400 hover:text-red-300 opacity-50 cursor-not-allowed transition"
                           title="Delete user (requires backend implementation)"
                           disabled
                         >
-                          <TrashIcon className="h-4 w-4" />
+                          <Trash className="h-4 w-4" />
                         </button>
                       </div>
                     </td>
@@ -159,7 +159,7 @@ export function UserList() {
 
           {users.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500">No users found.</p>
+              <p className="text-white/60">No users found.</p>
             </div>
           )}
         </div>
@@ -180,7 +180,7 @@ export function UserList() {
           title="Delete User"
           message={`User deletion requires backend implementation with admin privileges. This operation is not available in the current client-side implementation.`}
           confirmLabel="Understood"
-          confirmButtonClass="bg-gray-600 hover:bg-gray-500"
+          confirmButtonClass="bg-slate-600 hover:bg-slate-500"
           onConfirm={() => setDeletingUser(null)}
           onCancel={() => setDeletingUser(null)}
           isLoading={false}

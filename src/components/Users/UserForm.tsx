@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { XMarkIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { X, TriangleAlert } from 'lucide-react';
 import { useUsers } from '../../hooks/useUsers';
 import { LoadingSpinner } from '../Common/LoadingSpinner';
 import type { User } from '../../types';
@@ -65,28 +65,28 @@ export function UserForm({ user, onClose }: UserFormProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="bg-slate-800/90 backdrop-blur-lg border border-white/10 rounded-xl shadow-xl max-w-md w-full">
+        <div className="flex items-center justify-between p-6 border-b border-white/10">
+          <h3 className="text-lg font-semibold text-white">
             {isEditing ? 'Edit User Role' : 'Add New User'}
           </h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-500"
+            className="text-white/60 hover:text-white transition"
           >
-            <XMarkIcon className="h-6 w-6" />
+            <X className="h-6 w-6" />
           </button>
         </div>
 
         {!isEditing && (
-          <div className="p-6 bg-yellow-50 border-b border-yellow-200">
+          <div className="p-6 bg-yellow-500/10 border-b border-yellow-500/20">
             <div className="flex">
               <div className="flex-shrink-0">
-                <ExclamationTriangleIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+                <TriangleAlert className="h-5 w-5 text-yellow-400" aria-hidden="true" />
               </div>
               <div className="ml-3">
-                <p className="text-sm text-yellow-700">
+                <p className="text-sm text-yellow-200/80">
                   User creation requires backend implementation with admin privileges. 
                   This form will not work in the current client-side setup.
                 </p>
@@ -97,53 +97,53 @@ export function UserForm({ user, onClose }: UserFormProps) {
 
         <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="email" className="block text-sm font-medium text-white/80">
               Email
             </label>
             <input
               {...register('email')}
               type="email"
               disabled={isEditing}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              className="mt-1 block w-full"
               placeholder="user@example.com"
             />
             {errors.email && (
-              <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+              <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
             )}
           </div>
 
           {!isEditing && (
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-white/80">
                 Password
               </label>
               <input
                 {...register('password')}
                 type="password"
                 disabled={true}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="mt-1 block w-full"
                 placeholder="Requires backend implementation"
               />
               {errors.password && (
-                <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+                <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>
               )}
             </div>
           )}
 
           <div>
-            <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="role" className="block text-sm font-medium text-white/80">
               Role
             </label>
             <select
               {...register('role')}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              className="mt-1 block w-full"
             >
               <option value="viewer">Viewer - Read-only access</option>
               <option value="editor">Editor - Can manage borehole data</option>
               <option value="admin">Admin - Full access</option>
             </select>
             {errors.role && (
-              <p className="mt-1 text-sm text-red-600">{errors.role.message}</p>
+              <p className="mt-1 text-sm text-red-400">{errors.role.message}</p>
             )}
           </div>
 
