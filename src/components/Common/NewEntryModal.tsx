@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Plus, Mountain, MapPin, Drill } from 'lucide-react';
+import { X, Plus, Mountain, MapPin, Droplet } from 'lucide-react';
 
 interface NewEntryModalProps {
   isOpen: boolean;
@@ -81,7 +81,7 @@ export function NewEntryModal({ isOpen, onClose }: NewEntryModalProps) {
             className="w-full flex items-center gap-4 p-4 bg-slate-700/50 hover:bg-slate-700/70 border border-white/10 hover:border-white/20 rounded-lg transition-all duration-200"
           >
             <div className="h-10 w-10 bg-blue-600/20 rounded-lg flex items-center justify-center">
-              <Drill className="h-5 w-5 text-blue-400" />
+              <Droplet className="h-5 w-5 text-blue-400" />
             </div>
             <div className="flex-1 text-left">
               <h4 className="font-medium text-white">Add Borehole</h4>
